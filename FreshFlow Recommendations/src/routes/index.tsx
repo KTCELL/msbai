@@ -3,6 +3,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
 import { getRecommendation, sendDraftPo } from "../lib/recommendation.functions";
 import { isUnlocked } from "../lib/gate.functions";
+import { FreshflowChat } from "../components/freshflow-chat";
 
 export const Route = createFileRoute("/")({
   beforeLoad: async () => {
@@ -341,6 +342,14 @@ function Index() {
                 </pre>
               )}
             </div>
+
+            {/* Keyed on the recommendation so a new request starts a fresh chat thread. */}
+            <FreshflowChat
+              key={String(result["recommendation_id"] ?? `${ingredientId}-${planningDate}`)}
+              ingredientId={String(result["ingredient_id"] ?? ingredientId.trim())}
+              planningDate={String(result["planning_date"] ?? planningDate)}
+              recommendation={result}
+            />
           </section>
         )}
       </div>

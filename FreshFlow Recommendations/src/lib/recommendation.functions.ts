@@ -25,7 +25,7 @@ const draftPoSchema = z.object({
   manager_email: z.string().optional(),
 });
 
-async function callWebhook(url: string, payload: unknown) {
+export async function callWebhook(url: string, payload: unknown) {
   const { getGateSession } = await import("./gate.server");
   const gate = await getGateSession();
   if (gate.data.unlocked !== true) {
